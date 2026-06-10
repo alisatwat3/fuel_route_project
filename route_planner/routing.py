@@ -11,7 +11,7 @@ import re
 from django.conf import settings
 
 
-ORS_BASE = "https://api.openrouteservice.org/v2"
+ORS_BASE = "https://api.openrouteservice.org"
 HEADERS = lambda: {"Authorization": settings.ORS_API_KEY, "Content-Type": "application/json"}
 
 
@@ -45,7 +45,7 @@ def get_route(start_lon, start_lat, end_lon, end_lat) -> dict:
     Returns the full GeoJSON feature with geometry + step-by-step instructions.
     Each step contains: distance, duration, instruction, name, way_points.
     """
-    url = f"{ORS_BASE}/directions/driving-car/geojson"
+    url = f"{ORS_BASE}/v2/directions/driving-car/geojson"
     payload = {
         "coordinates": [[start_lon, start_lat], [end_lon, end_lat]],
         "instructions": True,

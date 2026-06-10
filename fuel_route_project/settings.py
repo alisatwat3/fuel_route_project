@@ -3,8 +3,12 @@ Django settings for fuel_route_project.
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+# Load local env vars from .env, then fallback to .env.example for development
+load_dotenv(BASE_DIR / '.env')
+load_dotenv(BASE_DIR / '.env.example', override=False)
 
 SECRET_KEY = 'django-insecure-change-me-in-production-use-env-var'
 
@@ -13,6 +17,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
     'rest_framework',
