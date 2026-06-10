@@ -12,7 +12,7 @@ The algorithm is a greedy look-ahead:
     next cheap state, we stop at the cheapest available station.
 """
 from django.conf import settings
-from .fuel_data import stations_by_state, cheapest_in_state, get_national_average
+from .fuel_data import cheapest_in_state, get_national_average
 
 MAX_RANGE = getattr(settings, 'VEHICLE_MAX_RANGE_MILES', 500)
 MPG = getattr(settings, 'VEHICLE_MPG', 10)

@@ -73,7 +73,7 @@ class RoutePlannerView(APIView):
         )
 
         # ------------------------------------------------------------------
-        # 5. Compose response
+        # 4. Compose response
         # ------------------------------------------------------------------
         duration_hours = round(route_info['total_duration_seconds'] / 3600, 1)
 
