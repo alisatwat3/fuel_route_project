@@ -65,3 +65,17 @@ ORS_API_KEY = os.environ.get('ORS_API_KEY', '')
 # Vehicle defaults
 VEHICLE_MAX_RANGE_MILES = 500
 VEHICLE_MPG = 10
+
+# Templates
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+            ],
+        },
+    },
+]
