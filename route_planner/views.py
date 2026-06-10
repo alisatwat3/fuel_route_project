@@ -73,14 +73,6 @@ class RoutePlannerView(APIView):
         )
 
         # ------------------------------------------------------------------
-        # 4. Build map URL (OpenStreetMap, no API key required)
-        # ------------------------------------------------------------------
-        map_url = _build_osm_url(
-            start_lat, start_lon, finish_lat, finish_lon,
-            route_info['coordinates'],
-        )
-
-        # ------------------------------------------------------------------
         # 5. Compose response
         # ------------------------------------------------------------------
         duration_hours = round(route_info['total_duration_seconds'] / 3600, 1)
@@ -96,32 +88,7 @@ class RoutePlannerView(APIView):
             'vehicle_range_miles': fuel_plan['vehicle_range_miles'],
             'vehicle_mpg': fuel_plan['vehicle_mpg'],
             'route_polyline': route_info['coordinates'],
-            'map_url': map_url,
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
 
-
-def _build_osm_url(
-    start_lat, start_lon, end_lat, end_lon, coords: list
-) -> str:
-    """
-    Build an OpenStreetMap URL that shows the bounding box of the route.
-    No API key needed — just a shareable link.
-    """
-    if coords:
-        lats = [c[1] for c in coords]
-        lons = [c[0] for c in coords]
-        min_lat, max_lat = min(lats), max(lats)
-        min_lon, max_lon = min(lons), max(lons)
-        bbox = f"{min_lon},{min_lat},{max_lon},{max_lat}"
-        return (
-            f"https://www.openstreetmap.org/?"
-            f"mlat={start_lat}&mlon={start_lon}"
-            f"#map=5/{(min_lat+max_lat)/2:.4f}/{(min_lon+max_lon)/2:.4f}"
-            f"&layers=N"
-        )
-    return (
-        f"https://www.openstreetmap.org/directions?"
-        f"from={start_lat},{start_lon}&to={end_lat},{end_lon}"
-    )
